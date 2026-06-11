@@ -17,6 +17,7 @@
  *  @section author Author
  *
  *  Limor Fried/Ladyada (Adafruit Industries).
+ *  SplitLatch modifications Copyright (c) 2026 Patrick Scruggs.
  *
  * 	@section license License
  *
@@ -46,6 +47,10 @@ Adafruit_TLC5947::Adafruit_TLC5947(uint16_t n, uint8_t c, uint8_t d,
   _clk = c;
   _dat = d;
   _lat = l;
+#if defined(__AVR__)
+  _latPort = NULL;
+  _latBit = 0;
+#endif
 
   pwmbuffer = (uint16_t *)malloc(2 * 24 * n);
   memset(pwmbuffer, 0, 2 * 24 * n);
@@ -58,9 +63,10 @@ Adafruit_TLC5947::Adafruit_TLC5947(uint16_t n, uint8_t c, uint8_t d,
 Adafruit_TLC5947::~Adafruit_TLC5947() { free(pwmbuffer); }
 
 /*!
- *    @brief  Writes PWM data to the all connected TLC5947 boards
+ *    @brief  Writes PWM data to all connected TLC5947 boards without
+ *            updating outputs.
  */
-void Adafruit_TLC5947::write() {
+void Adafruit_TLC5947::writeWithoutLatch() {
   digitalWrite(_lat, LOW);
   // 24 channels per TLC5974
   for (int16_t c = 24 * numdrivers - 1; c >= 0; c--) {
@@ -77,9 +83,34 @@ void Adafruit_TLC5947::write() {
     }
   }
   digitalWrite(_clk, LOW);
+}
+
+/*!
+ *    @brief  Latches previously shifted PWM data to the TLC5947 outputs.
+ */
+void Adafruit_TLC5947::latch() {
+#if defined(__AVR__)
+  if (_latPort) {
+    uint8_t oldSREG = SREG;
+    noInterrupts();
+    *_latPort |= _latBit;
+    *_latPort &= ~_latBit;
+    SREG = oldSREG;
+    return;
+  }
+#endif
 
   digitalWrite(_lat, HIGH);
   digitalWrite(_lat, LOW);
+}
+
+/*!
+ *    @brief  Writes PWM data to all connected TLC5947 boards and updates
+ *            outputs.
+ */
+void Adafruit_TLC5947::write() {
+  writeWithoutLatch();
+  latch();
 }
 
 /*!
@@ -144,6 +175,13 @@ boolean Adafruit_TLC5947::begin() {
   pinMode(_dat, OUTPUT);
   pinMode(_lat, OUTPUT);
   digitalWrite(_lat, LOW);
+#if defined(__AVR__)
+  uint8_t port = digitalPinToPort(_lat);
+  if (port != NOT_A_PIN) {
+    _latPort = portOutputRegister(port);
+    _latBit = digitalPinToBitMask(_lat);
+  }
+#endif
 
   return true;
 }

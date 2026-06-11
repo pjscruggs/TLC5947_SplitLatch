@@ -12,6 +12,7 @@
   products from Adafruit!
 
   Written by Limor Fried/Ladyada for Adafruit Industries.  
+  SplitLatch modifications Copyright (c) 2026 Patrick Scruggs.
   BSD license, all text above must be included in any redistribution
 
   Fixed typo in all occurences of NUM_TLC5947 (was 5974)
