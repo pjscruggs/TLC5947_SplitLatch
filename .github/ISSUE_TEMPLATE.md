@@ -1,4 +1,4 @@
-Thank you for opening an issue on TLC5947 SplitLatch. This is an unofficial
+Thank you for opening an issue on TLC5947_SplitLatch. This is an unofficial
 fork of Adafruit_TLC5947, so please use Adafruit's upstream repository or
 support channels for issues that reproduce in the unmodified Adafruit library.
 
@@ -9,7 +9,7 @@ SplitLatch behavior.
 
 - Arduino IDE or build tool version:
 
-- TLC5947 SplitLatch version or commit:
+- TLC5947_SplitLatch version or commit:
 
 - Minimal sketch or code that reproduces the problem:
 

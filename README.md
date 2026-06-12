@@ -1,6 +1,6 @@
-# TLC5947 SplitLatch
+# TLC5947_SplitLatch
 
-TLC5947 SplitLatch is an unofficial fork of Adafruit_TLC5947. It keeps the
+TLC5947_SplitLatch is an unofficial fork of Adafruit_TLC5947. It keeps the
 original `Adafruit_TLC5947` class and `write()` behavior for sketch
 compatibility, and adds separate shift and latch operations for applications
 that need to preload PWM frames before updating outputs.
@@ -26,9 +26,16 @@ Sketches should continue to include the original header name:
 #include <Adafruit_TLC5947.h>
 ```
 
+The library also provides a package-name wrapper header for new sketches:
+
+```cpp
+#include <TLC5947_SplitLatch.h>
+```
+
 ## License
 
-This project is licensed under the BSD-3-Clause license. See `license.txt`.
+This project is licensed under the BSD-3-Clause license. See `license.txt` and
+`NOTICE.md`.
 
 Original library:
 

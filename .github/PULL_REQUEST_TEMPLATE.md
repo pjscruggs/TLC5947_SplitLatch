@@ -1,4 +1,4 @@
-Thank you for creating a pull request for TLC5947 SplitLatch. This is an
+Thank you for creating a pull request for TLC5947_SplitLatch. This is an
 unofficial fork of Adafruit_TLC5947, so changes should either preserve upstream
 compatibility or clearly document why this fork needs different behavior.
 

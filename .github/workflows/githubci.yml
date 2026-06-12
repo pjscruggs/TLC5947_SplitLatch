@@ -1,4 +1,4 @@
-name: TLC5947 SplitLatch CI
+name: TLC5947_SplitLatch CI
 
 on: [pull_request, push]
 

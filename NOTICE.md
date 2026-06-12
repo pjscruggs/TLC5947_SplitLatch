@@ -1,6 +1,6 @@
 # Notices
 
-TLC5947 SplitLatch is an unofficial fork of Adafruit_TLC5947:
+TLC5947_SplitLatch is an unofficial fork of Adafruit_TLC5947:
 
 https://github.com/adafruit/Adafruit_TLC5947
 
