@@ -14,6 +14,7 @@
  * 	Adafruit!
  *
  *  Written by Limor Fried/Ladyada for Adafruit Industries.
+ *  SplitLatch modifications Copyright (c) 2026 Patrick Scruggs.
  *
  *	BSD license (see license.txt)
  */
@@ -37,6 +38,8 @@ public:
   void setPWM(uint16_t chan, uint16_t pwm);
   uint16_t getPWM(uint16_t chan);
   void setLED(uint16_t lednum, uint16_t r, uint16_t g, uint16_t b);
+  void writeWithoutLatch();
+  void latch();
   void write();
 
 private:
@@ -44,6 +47,10 @@ private:
 
   uint16_t numdrivers;
   uint8_t _clk, _dat, _lat;
+#if defined(__AVR__)
+  volatile uint8_t *_latPort;
+  uint8_t _latBit;
+#endif
 };
 
 #endif
